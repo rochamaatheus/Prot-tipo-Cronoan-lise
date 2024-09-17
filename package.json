@@ -1,0 +1,41 @@
+{
+  "name": "cronoanalise",
+  "version": "1.0.0",
+  "description": "Aplicação de cronoanálise de vídeos",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "start": "concurrently \"npm run start-react\" \"wait-on http://localhost:3000 && npm run start-electron\"",
+    "start-react": "cd frontend && npm start",
+    "build": "npm run build-react && npm run build-electron",
+    "build-react": "cd frontend && npm run build",
+    "build-electron": "electron-builder",
+    "pack": "electron-builder --dir",
+    "start-electron": "cross-env ELECTRON_START_URL=http://localhost:3000 electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.seuprojeto.cronoanalise",
+    "productName": "Cronoanálise",
+    "files": [
+      "main.js",
+      "preload.js",
+      "backend/**/*",
+      "frontend/build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    }
+  },
+  "devDependencies": {
+    "concurrently": "^6.5.1",
+    "cross-env": "^7.0.3",
+    "electron": "^25.0.0",
+    "electron-builder": "^23.0.0"
+  }
+}
